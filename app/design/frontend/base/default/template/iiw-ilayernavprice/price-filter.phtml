@@ -1,0 +1,28 @@
+<?php
+/* @var $this Mage_Catalog_Block_Layer_Filter_Price */
+?>
+<?php
+$modelAttribute = $this->getData('attribute_model'); /* $modelAttribute Mage_Catalog_Model_Resource_Eav_Attribute */
+$attributeFrontendLabel = $modelAttribute->getData('frontend_label');
+?>
+
+<ol>
+    <li>
+        <select onchange="setLocation(this.value)" title="<?php echo $attributeFrontendLabel; ?>" class="i-layer-nav-filter-price">
+            <option value=""><?php echo $this->__('-- Please Select --') ?></option>
+
+            <?php foreach ($this->getItems() as $_item): ?>
+                <?php
+                $optionValue = ($_item->getCount() > 0) ? $this->urlEscape($_item->getUrl()) : '';
+                $optionDisabled = ($_item->getCount() > 0) ? '' : ' disabled="disabled"';
+                ?>
+                <option value="<?php echo $optionValue; ?>"<?php echo $optionDisabled; ?>>
+                    <?php echo $_item->getLabel() ?>
+                    <?php if ($this->shouldDisplayProductCount()): ?>
+                        <span class="count">(<?php echo $_item->getCount() ?>)</span>
+                    <?php endif; ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </li>
+</ol>
